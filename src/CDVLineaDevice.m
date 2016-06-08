@@ -24,14 +24,13 @@
 @implementation CDVLineaDevice
 @synthesize callbackId;
 
-- (CDVPlugin*) initWithWebView:(UIWebView*)theWebView {
+- (void) pluginInitialize {
     LOG(@"initing Linea Device Plugin");
-    self = [super initWithWebView:theWebView];
     [[NSNotificationCenter defaultCenter]
-        addObserver:self
-        selector:@selector(disconnectLinea:)
-        name:UIApplicationWillResignActiveNotification
-        object:nil];
+     addObserver:self
+     selector:@selector(disconnectLinea:)
+     name:UIApplicationWillResignActiveNotification
+     object:nil];
     [[NSNotificationCenter defaultCenter]
      addObserver:self
      selector:@selector(connectLinea:)
@@ -43,7 +42,6 @@
      name:UIApplicationWillTerminateNotification
      object:nil];
     [self connectLinea: nil];
-    return self;
 }
 
 - (void) connectLinea:(NSNotification *)notification {
@@ -85,12 +83,10 @@
         }
 #define END_ARGCHECKWRAPPER \
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:returnArgs]; \
-        javaScript = [pluginResult toSuccessCallbackString:localCallbackId]; \
     } @catch (id exception){ \
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_JSON_EXCEPTION messageAsString:[exception reason]]; \
-        javaScript = [pluginResult toErrorCallbackString:localCallbackId]; \
     } \
-    [self writeJavascript:[NSString stringWithFormat:@"window.setTimeout(function(){%@;},0);", javaScript]];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:localCallbackId];
 #define IF_NULLOBJ(item) item ? item : [NSNull null]
 
 #endif
@@ -341,12 +337,10 @@
     	[returnArgs addObject:[NSNumber numberWithInt:lineaConnectionState]];
     	pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:returnArgs];
     	[pluginResult setKeepCallbackAsBool: true];
-    	javaScript = [pluginResult toSuccessCallbackString:localCallbackId];
 	} @catch (id exception){
     	pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_JSON_EXCEPTION messageAsString:[exception reason]];
-    	javaScript = [pluginResult toErrorCallbackString:localCallbackId];
 	}
-	[self writeJavascript:[NSString stringWithFormat:@"window.setTimeout(function(){%@;},0);", javaScript]];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:localCallbackId];
 }
 /**
  * Unsets the function used to monitor events from the linea device.
@@ -364,7 +358,7 @@
 #define END_JSINJECTWRAPPER \
         CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:returnArgs]; \
         [result setKeepCallbackAsBool:true]; \
-        [super writeJavascript:[result toSuccessCallbackString:self.callbackId]]; \
+        [self.commandDelegate sendPluginResult:result callbackId:self.callbackId]; \
     }
 #define NIL2EMPTYSTR(str) str == nil?@"":str
 #endif

@@ -26,5 +26,7 @@
 		<header-file src="src/DTDevices.h" />
 		<source-file src="src/libdtdev.a" framework="true"/>
 		<framework src="ExternalAccessory.framework" />
+		<framework src="AudioToolbox.framework" />
+		<framework src="MediaPLayer.framework" />
     </platform>
 </plugin>
