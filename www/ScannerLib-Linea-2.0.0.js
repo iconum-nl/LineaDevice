@@ -308,7 +308,7 @@ ScannerDevice = function (mappings){
 	*/
 	this.getCharging = function (callback){
 		this.sendCommand('getCharging', [], function (params){
-			callback(Boolean(paseInt(params[0])));
+			callback(Boolean(parseInt(params[0])));
 		});
 	};
 	/**
