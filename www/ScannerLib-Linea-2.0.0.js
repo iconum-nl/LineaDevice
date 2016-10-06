@@ -316,8 +316,8 @@ ScannerDevice = function (mappings){
 	*
 	* @param {Boolean} enabled Weather to enable or disable charging.
 	*/
-	this.setCharging = function (enabled, callback, errorCallback){
-		this.sendCommand('setCharging', [enabled ? true : false], callback, errorCallback);
+	this.setCharging = function (enabled){
+		this.sendCommand('setCharging', [enabled ? true : false]);
 	};
 	/**
 	* Retreives the sync button mode (Very little documentation is given on this, so I am not even sure what it does.)
