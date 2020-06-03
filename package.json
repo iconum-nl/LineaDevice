@@ -1,0 +1,15 @@
+{
+  "name": "com.allada.phonegap.webinterface",
+  "version": "0.1.0",
+  "description": "Cordova plugin for Linea devices.",
+  "cordova": {
+    "id": "com.allada.phonegap.webinterface",
+    "platforms": [
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iconum-nl/LineaDevice.git"
+  }
+}
