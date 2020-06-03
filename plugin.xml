@@ -3,7 +3,10 @@
 <plugin xmlns="http://cordova.apache.org/ns/plugins/1.0"
 	id="com.allada.phonegap.webinterface"
 	version="0.1.0">
+
 	<name>Web Interface</name>
+
+	<repo>https://github.com/iconum-nl/LineaDevice.git</repo>
 
 	<!-- cordova -->
 	<engines>
